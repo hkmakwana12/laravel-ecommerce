@@ -46,7 +46,7 @@
         <!-- Brand showcase section start -->
         <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
             <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-                data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
+                data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 6 }, "isInfiniteLoop": true }'>
 
                 <div
                     class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
@@ -70,9 +70,9 @@
                             @foreach ($brands as $brand)
                                 <div class="carousel-slide h-full">
                                     <a href="{{ route('products.byBrand', $brand) }}" class="block space-y-4">
-                                        <figure>
+                                        <figure class="aspect-square flex items-center justify-center">
                                             <img src="{{ $brand->thumbnailURL('thumb') }}" alt="{{ $brand->name }}"
-                                                loading="lazy" class="rounded-xl" />
+                                                loading="lazy" class="rounded-full" />
                                         </figure>
                                         <p class="text-center">{{ $brand->name }}</p>
                                     </a>
