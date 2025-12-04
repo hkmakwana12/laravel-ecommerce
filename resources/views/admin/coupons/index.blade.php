@@ -59,7 +59,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($coupons->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $coupons->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $coupons->links() !!}
     </div>
 </x-layouts.admin>

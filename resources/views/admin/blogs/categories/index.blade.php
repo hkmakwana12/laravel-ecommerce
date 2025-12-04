@@ -59,7 +59,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($blog_categories->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $blog_categories->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $blog_categories->links() !!}
     </div>
 </x-layouts.admin>

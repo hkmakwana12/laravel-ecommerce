@@ -78,7 +78,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($orders->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $orders->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $orders->links() !!}
     </div>
 </x-layouts.admin>

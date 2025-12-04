@@ -70,7 +70,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($banners->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $banners->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $banners->links() !!}
     </div>
 </x-layouts.admin>

@@ -67,8 +67,12 @@
                     </tbody>
                 </table>
             </div>
+            @if ($contactQueries->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $contactQueries->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $contactQueries->links() !!}
 
         <!-- Shared Modal -->
         <div x-on:keydown.escape.window="open = false" x-show="open" x-transition @click.away="close()"

@@ -55,7 +55,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($taxes->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $taxes->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $taxes->links() !!}
     </div>
 </x-layouts.admin>

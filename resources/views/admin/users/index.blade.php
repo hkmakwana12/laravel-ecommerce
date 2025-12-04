@@ -58,7 +58,11 @@
                     </tbody>
                 </table>
             </div>
+            @if ($users->hasPages())
+                <div class="card-footer border-t border-gray-200 p-4">
+                    {!! $users->links() !!}
+                </div>
+            @endif
         </div>
-        {!! $users->links() !!}
     </div>
 </x-layouts.admin>
