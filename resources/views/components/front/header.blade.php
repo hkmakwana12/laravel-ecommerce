@@ -23,7 +23,7 @@
         <div class="w-full lg:flex lg:items-center lg:gap-2">
             <div class="navbar-start items-center justify-between max-lg:w-full">
                 <a class="text-base-content flex items-center gap-3 text-xl font-semibold" href="{{ route('home') }}">
-                    <img src="{{ getLogoURL() }}" alt="Saptapadi Matrimonial" class="h-10 w-auto" />
+                    <img src="{{ getLogoURL() }}" alt="{{ config('app.name') }}" class="h-10 w-auto" />
                 </a>
                 <div class="flex items-center gap-5 lg:hidden">
                     <div class="indicator">
