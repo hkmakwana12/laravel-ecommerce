@@ -98,7 +98,7 @@ class AddressController extends Controller
             abort(404);
         }
 
-        $countries = Country::all('id', 'name')
+        $countries = Country::all(['id', 'name'])
             ->pluck('name', 'id');
 
         $rightSideView = 'addresses.form';

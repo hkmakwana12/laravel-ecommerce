@@ -134,6 +134,30 @@
                                 @endforeach
                                 <!-- cart item end -->
                                 <dl class="space-y-6 mt-10">
+
+                                    <div class="flex gap-2 mt-2">
+                                        <label class="label-text sr-only">Coupon Code</label>
+                                        <input type="text" class="input input-bordered w-full"
+                                            placeholder="Enter coupon code" x-model="couponCode" @input="resetCoupon()">
+
+                                        <button type="button" class="btn btn-outline btn-primary" @click="applyCoupon">
+                                            Apply
+                                        </button>
+                                    </div>
+
+                                    <template x-if="couponError">
+                                        <p class="text-error mt-2 text-sm" x-text="couponError"></p>
+                                    </template>
+
+                                    <template x-if="couponApplied">
+                                        <p class="text-success mt-2 text-sm">
+                                            Coupon applied (−<span x-text="formatCurrency(couponDiscount)"></span>)
+                                        </p>
+                                    </template>
+
+                                    <input type="hidden" name="coupon_code" :value="couponCode">
+                                    <input type="hidden" name="coupon_discount" :value="couponDiscount">
+
                                     <div class="flex items-center justify-between mb-3">
                                         <span class="text-base-content/80">Sub Total</span>
                                         <span
@@ -149,10 +173,22 @@
                                     <template x-for="tax in taxes" :key="tax.name">
                                         <div class="flex items-center justify-between">
                                             <dt class="text-base/6 text-gray-600" x-text="tax.name"></dt>
-                                            <dd class="text-base/6 font-bold text-gray-900" x-text="tax.amount_display">
+                                            <dd class="text-base/6 font-bold text-gray-900"
+                                                x-text="tax.amount_display">
                                             </dd>
                                         </div>
                                     </template>
+
+                                    <template x-if="couponApplied">
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-base-content/80">Coupon Discount (<span
+                                                    x-text="couponCode"></span>)</span>
+                                            <span class="text-success font-medium">
+                                                - <span x-text="formatCurrency(couponDiscount)"></span>
+                                            </span>
+                                        </div>
+                                    </template>
+
                                     <div class="divider mb-3"></div>
                                     <div class="flex items-center justify-between mb-3">
                                         <span class="text-base-content text-lg font-semibold">Grand Total</span>
@@ -182,8 +218,14 @@
                     subTotal: {{ cart()->total }},
                     deliveryCharge: {{ getDeliveryCharge() }},
                     totalTax: 0,
+
+                    couponCode: '',
+                    couponDiscount: 0,
+                    couponApplied: false,
+                    couponError: null,
+
                     grandTotal() {
-                        return this.subTotal + this.deliveryCharge + this.totalTax;
+                        return this.subTotal + this.deliveryCharge + this.totalTax - this.couponDiscount;
                     },
                     fetchTaxes() {
                         axios.get("{{ route('account.checkout.taxes') }}", {
@@ -196,12 +238,39 @@
                                 this.taxes = response.data.taxes;
                                 this.totalTax = response.data.total_tax;
 
-                                this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge;
+                                this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
                             })
                             .catch(error => {
                                 console.error("Tax fetch error:", error);
                             });
                     },
+
+                    applyCoupon() {
+                        this.couponError = null;
+
+                        axios.post("{{ route('account.checkout.apply-coupon') }}", {
+                            code: this.couponCode
+                        }).then(response => {
+                            this.couponDiscount = response.data.discount;
+                            this.couponApplied = true;
+
+                            this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
+
+                        }).catch(error => {
+                            this.couponDiscount = 0;
+                            this.couponApplied = false;
+                            this.couponError = error.response?.data?.message || 'Invalid coupon';
+                        });
+                    },
+
+                    resetCoupon() {
+                        this.couponDiscount = 0;
+                        this.couponApplied = false;
+                        this.couponError = null;
+
+                        this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
+                    },
+
                     formatCurrency(value) {
                         return value.toLocaleString('en-US', {
                             style: 'currency',

@@ -80,7 +80,7 @@
 
         <tfoot>
             <tr>
-                <td colspan="2" rowspan="4" class="text-left" style="vertical-align: top">
+                <td colspan="2" rowspan="5" class="text-left" style="vertical-align: top">
                     {{ $order->notes }}
                 </td>
                 <th colspan="2" class="text-right">Sub Total</th>
@@ -96,32 +96,39 @@
             </tr>
 
             <tr>
+                <th colspan="2" class="text-right">Discount</th>
+                <td class="text-right">@money($order->coupon_discount)</td>
+            </tr>
+
+            <tr>
                 <th colspan="2" class="text-right">Grand Total</th>
                 <td class="text-right"><b>@money($order->grand_total)</b></td>
             </tr>
         </tfoot>
     </table>
-
-    <table class="table-bordered" style="margin-top: 20px;">
-        <thead>
-            <tr>
-                <th>Tax Type</th>
-                <th class="text-right">Tax Rate</th>
-                <th class="text-right">Taxable Amount</th>
-                <th class="text-right">Tax Amount</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($order->getTaxBreakdown() as $tax)
+    @if ($order->taxes()->exists())
+        <table class="table-bordered" style="margin-top: 20px;">
+            <thead>
                 <tr>
-                    <td>{{ $tax['type'] }}</td>
-                    <td class="text-right">{{ $tax['rate'] }} %</td>
-                    <td class="text-right">@money($tax['total_taxable_amount'])</td>
-                    <td class="text-right">@money($tax['total_amount'])</td>
+                    <th>Tax Type</th>
+                    <th class="text-right">Tax Rate</th>
+                    <th class="text-right">Taxable Amount</th>
+                    <th class="text-right">Tax Amount</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($order->getTaxBreakdown() as $tax)
+                    <tr>
+                        <td>{{ $tax['type'] }}</td>
+                        <td class="text-right">{{ $tax['rate'] }} %</td>
+                        <td class="text-right">@money($tax['total_taxable_amount'])</td>
+                        <td class="text-right">@money($tax['total_amount'])</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    @endif
 </body>
 
 </html>

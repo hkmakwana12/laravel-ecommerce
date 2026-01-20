@@ -150,6 +150,8 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
 
     Route::get('account/checkout/tax', [OrderController::class, 'getTaxes'])->name('account.checkout.taxes');
 
+    Route::post('account/checkout/apply-coupon', [OrderController::class, 'applyCoupon'])->name('account.checkout.apply-coupon');
+
     Route::get('/account/orders/{order:order_number}/pay', [OrderController::class, 'pay'])->name('account.orders.pay');
     Route::get('/account/orders/{order}/verify-payment', [OrderController::class, 'verifyPayment'])->name('account.orders.verifyPayment');
 

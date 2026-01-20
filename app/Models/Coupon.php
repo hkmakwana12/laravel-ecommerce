@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -33,6 +34,10 @@ class Coupon extends Model
         'end_date'     => 'date:Y-m-d',
     ];
 
+    public function usages()
+    {
+        return $this->hasMany(CouponUsage::class);
+    }
 
     public function scopeSearch($query, $term)
     {
@@ -46,5 +51,20 @@ class Coupon extends Model
                 ->orWhere('start_date', 'like', "%{$term}%")
                 ->orWhere('end_date', 'like', "%{$term}%");
         });
+    }
+
+    public function scopeActive(Builder $query): Builder
+    {
+        $now = now();
+
+        return $query
+            ->where(function ($q) use ($now) {
+                $q->whereNull('start_date')
+                    ->orWhere('start_date', '<=', $now);
+            })
+            ->where(function ($q) use ($now) {
+                $q->whereNull('end_date')
+                    ->orWhere('end_date', '>=', $now);
+            });
     }
 }

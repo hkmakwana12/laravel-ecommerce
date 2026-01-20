@@ -164,7 +164,7 @@
                                                     aria-label="Decrement button" data-input-number-decrement>
                                                     <span class="icon-[tabler--minus] size-3.5 shrink-0"></span>
                                                 </button>
-                                                <input class="text-center" type="number"
+                                                <input class="text-center" type="text"
                                                     value="{{ $product->quantity }}"
                                                     name="quantity[{{ $product->product_id }}]"
                                                     aria-label="Mini stacked buttons" data-input-number-input

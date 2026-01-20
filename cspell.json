@@ -4,7 +4,16 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
-        "lucide"
+        "axios",
+        "enderror",
+        "endforeach",
+        "endforelse",
+        "endpush",
+        "fieldset",
+        "forelse",
+        "lucide",
+        "nowrap",
+        "tabler"
     ],
     "ignoreWords": [],
     "import": []

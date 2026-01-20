@@ -8,6 +8,7 @@ use App\Settings\PrefixSetting;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Order extends Model
@@ -23,7 +24,9 @@ class Order extends Model
         'grand_total',
         'payment_method',
         'payment_status',
-        'notes'
+        'notes',
+        'coupon_id',
+        'coupon_discount'
     ];
 
     protected $casts = [
@@ -61,9 +64,14 @@ class Order extends Model
         return $this->hasMany(Payment::class);
     }
 
-    public function taxes()
+    public function taxes(): MorphMany
     {
         return $this->morphMany(Taxable::class, 'taxable');
+    }
+
+    public function coupon(): BelongsTo
+    {
+        return $this->belongsTo(Coupon::class);
     }
 
     public function scopeSearch($query, $term)

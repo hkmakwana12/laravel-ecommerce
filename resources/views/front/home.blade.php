@@ -192,34 +192,14 @@
 
     <!-- recent products section start -->
     <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"
-            data-carousel='{ "loadingClasses": "opacity-0", "slidesQty": { "xs": 1, "lg": 4 }, "isInfiniteLoop": true }'>
-            <div
-                class="mb-6 space-y-4 md:mb-8 lg:mb-10 flex flex-col md:flex-row justify-between items-start md:items-center">
-                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added
-                </h2>
-                <div class="flex gap-4">
-                    <button
-                        class="btn btn-square btn-sm carousel-prev btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
-                        <span class="icon-[tabler--arrow-left] size-5"></span>
-                    </button>
-                    <button
-                        class="btn btn-square btn-sm carousel-next btn-primary carousel-disabled:opacity-100 carousel-disabled:btn-outline relative hover:text-white">
-                        <span class="icon-[tabler--arrow-right] size-5"></span>
-                    </button>
-                </div>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Product Header -->
+            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
+                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added</h2>
             </div>
 
-            <div class="relative w-full">
-                <div class="carousel">
-                    <div class="carousel-body h-full opacity-0 gap-6">
-                        @foreach ($bestSellingProducts as $product)
-                            <div class="carousel-slide h-full">
-                                <x-products.card :product="$product" />
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                @each('components.products.card', $bestSellingProducts, 'product')
             </div>
         </div>
     </div>
