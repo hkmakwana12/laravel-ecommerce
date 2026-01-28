@@ -36,21 +36,15 @@
                             title: '{{ addslashes(old('title', $blog_post->title)) }}',
                             slug: '{{ old('slug', $blog_post->slug) }}'
                         }">
-                            <div class="space-y-1">
-                                <label for="title" class="label-text">Title</label>
-                                <input type="text" name="title" id="title"
-                                    class="input @error('title') is-invalid @enderror" x-model="title"
-                                    @input="slug = slugify(title)" />
-                                @error('title')
-                                    <span class="helper-text">{{ $message }}</span>
-                                @enderror
+                            <x-form.input label="Title" name="title" :value="$blog_post->title" x-model="title"
+                                @input="slug = slugify(title)" required autofocus />
 
-                                <p class="text-sm text-gray-600">
-                                    <strong>Slug : </strong>
-                                    <span x-text="slug"></span>
-                                    <input type="hidden" name="slug" :value="slug" />
-                                </p>
-                            </div>
+
+                            <p class="text-sm text-gray-600">
+                                <strong>Slug : </strong>
+                                <span x-text="slug"></span>
+                                <input type="hidden" name="slug" :value="slug" />
+                            </p>
                         </div>
                     </div>
 
@@ -60,30 +54,12 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">SEO</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">SEO</h3>
                             <div class="grid gap-4">
-                                <div class="space-y-1">
-                                    <label for="seo_title" class="label-text">SEO Title</label>
-                                    <input type="text" name="seo_title" id="seo_title"
-                                        class="input @error('seo_title') is-invalid @enderror"
-                                        value="{{ old('seo_title', $blog_post->seo_title) }}" />
-                                    @error('seo_title')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="space-y-1">
-                                    <label for="seo_description" class="label-text">SEO
-                                        Description</label>
-                                    <textarea class="textarea @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                                        rows="3">{{ old('seo_description', $blog_post->seo_description) }}</textarea>
-                                    @error('seo_description')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <x-form.input label="SEO Title" name="seo_title" :value="$blog_post->seo_title" />
+                                <x-form.textarea label="SEO Description" name="seo_description" :value="$blog_post->seo_description"
+                                    rows="3" />
                             </div>
                         </div>
                     </div>
@@ -91,10 +67,8 @@
 
                 <div class="col-span-12 lg:col-span-4 space-y-6">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Status</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Status</h3>
                             <select name="status" id="status" class="select @error('status') is-invalid @enderror">
                                 <option value="published" @selected(old('status', $blog_post->published) == 'published')>
                                     Published
@@ -106,10 +80,8 @@
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Associations</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Associations</h3>
                             <div class="space-y-4">
 
                                 <div class="space-y-1">
@@ -137,24 +109,16 @@
                                     @enderror
                                 </div>
 
-                                <div class="space-y-1">
-                                    <label for="published_at" class="label-text">Published At</label>
-                                    <input type="date" name="published_at" id="published_at"
-                                        class="input @error('published_at') is-invalid @enderror"
-                                        value="{{ old('published_at', $blog_post->published_at?->format('Y-m-d') ?? now()->format('Y-m-d')) }}" />
-                                    @error('published_at')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <x-form.input label="Published At" type="date" name="published_at" :value="$blog_post->published_at?->format('Y-m-d') ?? now()->format('Y-m-d')"
+                                    required />
+
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Featured Image</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Featured Image</h3>
                             <div class="space-y-1">
                                 <input id="image" name="image" type="file" @class(['input', 'is-invalid' => $errors->has('blog_category_id')]) />
                                 @error('image')

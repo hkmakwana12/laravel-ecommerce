@@ -32,62 +32,20 @@
             <div class="card">
                 <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
+                        <x-form.input label="Name" name="name" :value="$banner->name" required autofocus />
+                        <x-form.input type="file" label="Image" name="image" required />
 
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="input @error('name') is-invalid @enderror"
-                                value="{{ old('name', $banner->name) }}" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Destination Link" name="link" :value="$banner->link" />
+                        <x-form.input label="Location" name="location" :value="$banner->location" list="locationOption" />
+                        <datalist id="locationOption">
+                            <option value="slider">
+                        </datalist>
 
-                        <div class="space-y-1">
-                            <label for="image" class="label-text">Image</label>
-                            <input id="image" name="image" type="file" class="input">
-                        </div>
+                        <input type="hidden" name="is_new_tab" value="0" />
+                        <x-form.checkbox label="Open in New Tab" name="is_new_tab" :checked="$banner->is_new_tab" />
 
-                        <div class="space-y-1">
-                            <label for="link" class="label-text">Destination Link</label>
-                            <input type="text" name="link" id="link"
-                                class="input @error('link') is-invalid @enderror"
-                                value="{{ old('link', $banner->link) }}" />
-                            @error('link')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="location" class="label-text">Location</label>
-                            <input type="text" name="location" id="location"
-                                class="input @error('location') is-invalid @enderror"
-                                value="{{ old('location', $banner->location ?? 'slider') }}" list="locationOption" />
-                            <datalist id="locationOption">
-                                <option value="slider">
-                            </datalist>
-                            @error('location')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-1">
-                                <input type="hidden" name="is_new_tab" value="0" />
-                                <input type="checkbox" class="switch switch-primary" id="is_new_tab" name="is_new_tab"
-                                    value="1" @checked(old('is_new_tab', $banner->is_new_tab)) />
-                                <label class="label-text text-base" for="is_new_tab"> Open in New tab </label>
-                            </div>
-                        </div>
-
-                        <div class="space-y-1">
-                            <div class="flex items-center gap-1">
-                                <input type="hidden" name="is_active" value="0" />
-                                <input type="checkbox" class="switch switch-primary" id="is_active" name="is_active"
-                                    value="1" @checked(old('is_active', $banner->is_active)) />
-                                <label class="label-text text-base" for="is_active"> Active </label>
-                            </div>
-                        </div>
+                        <input type="hidden" name="is_active" value="0" />
+                        <x-form.checkbox label="Active" name="is_active" :checked="$banner->is_active" />
                     </div>
                 </div>
             </div>

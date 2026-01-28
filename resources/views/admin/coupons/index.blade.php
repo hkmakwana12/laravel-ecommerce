@@ -18,19 +18,33 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Coupons" :addNewAction="route('admin.coupons.create')" />
 
-        <x-admin.table.search />
-
         {{-- Coupons Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Code</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="code" :current-sort="request('sort')">
+                                    Coupon Code
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col">Type</th>
-                            <th scope="col">Value</th>
-                            <th scope="col">Start Date</th>
-                            <th scope="col">End Date</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="value" :current-sort="request('sort')">
+                                    Value
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="start_date" :current-sort="request('sort')">
+                                    Start Date
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="end_date" :current-sort="request('sort')">
+                                    End Date
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>
                             </th>

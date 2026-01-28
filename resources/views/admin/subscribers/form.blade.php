@@ -32,25 +32,8 @@
             <div class="card">
                 <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name"
-                                value="{{ old('name', $subscriber->name) }}"
-                                class="input @error('name') is-invalid @enderror" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="email" class="label-text">Email</label>
-                            <input type="text" name="email" id="email"
-                                value="{{ old('email', $subscriber->email) }}"
-                                class="input @error('email') is-invalid @enderror" />
-                            @error('email')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$subscriber->name" autofocus />
+                        <x-form.input label="Email" name="email" :value="$subscriber->email" required />
                     </div>
                 </div>
             </div>

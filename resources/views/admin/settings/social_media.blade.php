@@ -85,9 +85,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 space-x-2">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
+            <button type="submit" class="btn btn-primary mt-6">Save Changes</button>
         </form>
     </div>
 </x-layouts.admin>

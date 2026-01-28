@@ -29,57 +29,15 @@
             <div class="card">
                 <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
+                        <x-form.input label="First Name" name="first_name" :value="$user->first_name" required autofocus />
 
-                        <div class="space-y-1">
-                            <label for="first_name" class="label-text">First Name</label>
-                            <input type="text" name="first_name" id="first_name"
-                                class="input @error('first_name') is-invalid @enderror"
-                                value="{{ old('first_name', $user->first_name) }}" />
-                            @error('first_name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="last_name" class="label-text">Last Name</label>
-                            <input type="text" name="last_name" id="last_name"
-                                class="input @error('last_name') is-invalid @enderror"
-                                value="{{ old('last_name', $user->last_name) }}" />
-                            @error('last_name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="email" class="label-text">Email</label>
-                            <input type="text" name="email" id="email"
-                                class="input @error('email') is-invalid @enderror"
-                                value="{{ old('email', $user->email) }}" />
-                            @error('email')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="phone" class="label-text">Phone</label>
-                            <input type="text" name="phone" id="phone"
-                                class="input @error('phone') is-invalid @enderror"
-                                value="{{ old('phone', $user->phone) }}" />
-                            @error('phone')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
+                        <x-form.input label="Last Name" name="last_name" :value="$user->last_name" />
+                        <x-form.input label="Email" name="email" :value="$user->email" required />
+                        <x-form.input label="Phone" name="phone" :value="$user->phone" required />
 
                         <!---  password------->
-                        <div class="space-y-1">
-                            <label for="password" class="label-text">Password</label>
-                            <input type="password" name="password" id="password"
-                                class="input @error('password') is-invalid @enderror" />
-                            @error('password')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.password type="password" label="Password" name="password" :value="''"
+                            :required="!$user->id" />
 
                     </div>
                 </div>

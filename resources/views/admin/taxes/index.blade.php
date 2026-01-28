@@ -18,17 +18,27 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Taxes" :addNewAction="route('admin.taxes.create')" />
 
-        <x-admin.table.search />
-
         {{-- Taxes Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Type</th>
-                            <th scope="col">Rate</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="name" :current-sort="request('sort')">
+                                    Tax Name
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="type" :current-sort="request('sort')">
+                                    Type
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="rate" :current-sort="request('sort')">
+                                    Rate
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>
                             </th>

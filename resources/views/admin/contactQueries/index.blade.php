@@ -18,17 +18,27 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Contact Queries" />
 
-        <x-admin.table.search />
-
         {{-- Contact Query Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Phone</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="name" :current-sort="request('sort')">
+                                    Name
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="email" :current-sort="request('sort')">
+                                    Email
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="phone" :current-sort="request('sort')">
+                                    Phone
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col">Subject</th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>

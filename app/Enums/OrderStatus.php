@@ -26,8 +26,8 @@ enum OrderStatus: string
             self::NEW           => 'gray',
             self::PROCESSING    => 'primary',
             self::SHIPPED       => 'purple',
-            self::DELIVERED     => 'green',
-            self::CANCELLED     => 'red',
+            self::DELIVERED     => 'success',
+            self::CANCELLED     => 'error',
         };
     }
 

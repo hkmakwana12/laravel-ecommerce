@@ -18,8 +18,6 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Banners" :addNewAction="route('admin.banners.create')" />
 
-        <x-admin.table.search />
-
         {{-- Banners Table --}}
         <div class="card">
             <div class="overflow-x-auto">

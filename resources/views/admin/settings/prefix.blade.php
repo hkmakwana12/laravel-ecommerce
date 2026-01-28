@@ -19,16 +19,14 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks :title=$title />
 
-        <form method="post" action="{{ route('admin.settings.store') }}">
+        <form method="post" action="{{ route('admin.settings.store') }}" class="space-y-6">
             @csrf
 
             <input type="hidden" name="group_name" value="prefix" />
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 mb-6">
+            <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-base-content text-lg font-medium">Order Prefix</h3>
-                    </div>
                     <div class="card-body">
+                        <h3 class="text-base-content text-lg font-medium">Order Prefix</h3>
                         <div class="grid grid-cols-1 gap-4">
                             <div class="space-y-1">
                                 <div class="flex justify-between">
@@ -76,10 +74,8 @@
                 </div>
 
                 <div class="card">
-                    <div class="card-header">
-                        <h3 class="text-base-content text-lg font-medium">Payment Prefix</h3>
-                    </div>
                     <div class="card-body">
+                        <h3 class="text-base-content text-lg font-medium">Payment Prefix</h3>
                         <div class="grid grid-cols-1 gap-4">
 
                             <div class="space-y-1">

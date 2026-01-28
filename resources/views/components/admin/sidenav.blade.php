@@ -128,29 +128,31 @@
     ];
 @endphp
 
-<aside id="layout-toggle"
-    class="overlay overlay-open:translate-x-0 drawer drawer-start inset-y-0 start-0 hidden h-full [--auto-close:lg] sm:w-75 lg:z-50 lg:block lg:translate-x-0 lg:shadow-none"
-    aria-label="Sidebar" tabindex="-1">
-    <div class="drawer-head border-base-content/20 border-e px-6 py-2 h-16">
-        <div class="flex flex-1 items-center justify-between">
+<aside id="with-navbar-sidebar"
+    class="overlay [--auto-close:lg] lg:shadow-none overlay-open:translate-x-0 drawer drawer-start hidden h-full max-w-75 lg:z-0 lg:block lg:translate-x-0 lg:pt-16"
+    role="dialog" tabindex="-1">
+    <div class="drawer-head flex lg:hidden px-2 py-3">
+        <button type="button" class="btn btn-text max-lg:btn-square lg:hidden me-2" aria-haspopup="dialog"
+            aria-expanded="false" aria-controls="with-navbar-sidebar" data-overlay="#with-navbar-sidebar">
+            <span class="icon-[tabler--menu-2] size-5"></span>
+        </button>
+        <div class="flex flex-1 items-center">
             <a class="link text-base-content link-neutral text-xl font-semibold no-underline"
                 href="{{ route('admin.dashboard') }}">
-                <img class="h-10 w-auto" src="{{ getLogoURL() }}" alt="{{ setting('general.app_name') }}"
-                    loading="lazy" />
+                <div class="flex items-center gap-3">
+                    <img src="{{ getLogoURL() }}" class="h-8" alt="brand-logo" />
+                    <h2 class="text-base-content text-xl font-bold whitespace-nowrap sr-only">{{ config('app.name') }}
+                    </h2>
+                </div>
             </a>
-            <button type="button" class="btn btn-text btn-square btn-xs block lg:hidden" aria-label="Close"
-                data-overlay="#layout-toggle">
-                <span class="icon-[tabler--x] size-4"></span>
-            </button>
         </div>
     </div>
-    <div class="drawer-body border-base-content/20 h-[calc(100vh-4rem)] border-e p-4">
-        <ul class="menu menu-sm p-0">
+    <div class="drawer-body h-full px-2 pt-4 lg:border-e border-base-content/25">
+        <ul class="menu space-y-0.5 p-0">
             @foreach ($navigation as $item)
                 @if (isset($item['group']))
-                    <li
-                        class="text-base-content/50 before:bg-base-content/20 mt-2 p-2 text-xs uppercase before:absolute before:-start-3 before:top-1/2 before:h-0.5 before:w-2.5">
-                        {{ $item['group'] }}</li>
+                    <div class="divider text-base-content/50 py-3 after:border-0">
+                        {{ $item['group'] }}</div>
                 @else
                     <li>
                         <a href="{{ $item['route'] }}" class="{{ $item['active'] ? 'menu-active' : '' }}">

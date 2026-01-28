@@ -23,7 +23,7 @@
     @vite('resources/css/app.css')
 </head>
 
-<body>
+<body class="bg-base-200">
     <x-admin.alert />
 
     <div class="bg-base-200 flex min-h-screen flex-col">
@@ -38,9 +38,10 @@
             <!-- ---------- END MAIN CONTENT ---------- -->
 
             <!-- ---------- FOOTER CONTENT ---------- -->
-            <footer class="bg-base-100">
-                <div class="mx-auto h-14 w-full px-6 flex items-center">
-                    <p> &copy; {{ date('Y') }} {{ setting('general.app_name') }}. All rights reserved. | Developed
+            <footer class="mx-auto w-full px-6 py-3.5 text-sm bg-base-100">
+                <div class="flex items-center justify-between gap-3 max-lg:flex-col">
+                    <p class="text-base-content text-center">
+                        &copy; {{ date('Y') }} {{ setting('general.app_name') }}. All rights reserved. | Developed
                         by
                         <a href="https://ethericsolution.com/" target="_blank" class="link link-primary link-hover">
                             Etheric Solution

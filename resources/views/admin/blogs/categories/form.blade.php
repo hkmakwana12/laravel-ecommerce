@@ -34,60 +34,25 @@
                     slug: '{{ old('slug', $blog_category->slug) }}'
                 }">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="input @error('name') is-invalid @enderror" x-model="title"
-                                @input="slug = slugify(title)" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$blog_category->name" x-model="title"
+                            @input="slug = slugify(title)" required autofocus />
 
-                        <div class="space-y-1">
-                            <label for="slug" class="label-text">Slug</label>
-                            <input type="text" name="slug" id="slug"
-                                class="input @error('slug') is-invalid @enderror" x-model="slug" readonly />
-                            @error('slug')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Slug" name="slug" :value="$blog_category->slug" x-model="slug" required
+                            readonly />
 
-                        <div class="space-y-1 col-span-2">
-                            <label for="description" class="label-text">Description</label>
-                            <textarea class="textarea @error('description') is-invalid @enderror" id="description" name="description"
-                                rows="3"> {{ old('description', $blog_category->description) }}</textarea>
-                            @error('description')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.textarea label="Description" name="description" :value="$blog_category->description" rows="3"
+                            wrapperClass="col-span-2" />
                     </div>
                 </div>
             </div>
             <div class="card">
-                <div class="card-header">
-                    <h3 class="text-base-content text-lg font-medium">SEO</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-base-content text-lg font-medium">SEO</h3>
                     <div class="grid gap-4">
-                        <div class="space-y-1">
-                            <label for="seo_title" class="label-text">SEO Title</label>
-                            <input type="text" name="seo_title" id="seo_title"
-                                class="input @error('seo_title') is-invalid @enderror"
-                                value="{{ old('seo_title', $blog_category->seo_title) }}" />
-                            @error('seo_title')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="SEO Title" name="seo_title" :value="$blog_category->seo_title" />
 
-                        <div class="space-y-1">
-                            <label for="seo_description" class="label-text">SEO Description</label>
-                            <textarea class="textarea @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                                rows="3">{{ old('seo_description', $blog_category->seo_description) }}</textarea>
-                            @error('seo_description')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.textarea label="SEO Description" name="seo_description" :value="$blog_category->seo_description"
+                            rows="3" />
                     </div>
                 </div>
             </div>

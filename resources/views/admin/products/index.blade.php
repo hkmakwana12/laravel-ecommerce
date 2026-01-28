@@ -18,19 +18,37 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Products" :addNewAction="route('admin.products.create')" />
 
-        <x-admin.table.search />
-
         {{-- Products Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Regular Price</th>
-                            <th scope="col">Selling Price</th>
-                            <th scope="col">Category</th>
-                            <th scope="col">Brand</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="name" :current-sort="request('sort')">
+                                    Product Name
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="regular_price" :current-sort="request('sort')">
+                                    Regular Price
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="selling_price" :current-sort="request('sort')">
+                                    Selling Price
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="category_id" :current-sort="request('sort')">
+                                    Category
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="brand_id" :current-sort="request('sort')">
+                                    Brand
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col" class="text-center">View Count</th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>

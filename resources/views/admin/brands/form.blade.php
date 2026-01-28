@@ -34,66 +34,26 @@
                         title: '{{ addslashes(old('name', $brand->name)) }}',
                         slug: '{{ old('slug', $brand->slug) }}'
                     }">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="input @error('name') is-invalid @enderror" x-model="title"
-                                @input="slug = slugify(title)" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$brand->name" x-model="title"
+                            @input="slug = slugify(title)" autofocus required />
 
-                        <div class="space-y-1">
-                            <label for="slug" class="label-text">Slug</label>
-                            <input type="text" name="slug" id="slug"
-                                class="input @error('slug') is-invalid @enderror" x-model="slug" readonly />
-                            @error('slug')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Slug" name="slug" :value="$brand->slug" x-model="slug" required
+                            readonly />
 
-                        <div class="space-y-1 col-span-2">
-                            <label for="description" class="label-text">Description</label>
-                            <textarea class="textarea @error('description') is-invalid @enderror" id="description" name="description"
-                                rows="3">{{ old('description', $brand->description) }}</textarea>
-                            @error('description')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.textarea label="Description" name="description" :value="$brand->description" rows="3"
+                            wrapperClass="col-span-2" />
 
-                        <div class="space-y-1">
-                            <label for="featured-image" class="block text-sm/6 font-medium text-gray-900">Featured
-                                Image</label>
-                            <input id="featured-image" name="featured-image" type="file" class="input">
-                        </div>
+                        <x-form.input type="file" label="Featured Image" name="featured_image" :value="$brand->featured_image" />
                     </div>
                 </div>
             </div>
             <div class="card mt-6">
-                <div class="card-header">
-                    <h3 class="text-base-content text-lg font-medium">SEO</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-base-content text-lg font-medium">SEO</h3>
                     <div class="grid gap-4">
-                        <div class="space-y-1">
-                            <label for="seo_title" class="label-text">SEO Title</label>
-                            <input type="text" name="seo_title" id="seo_title"
-                                class="input @error('seo_title') is-invalid @enderror"
-                                value="{{ old('seo_title', $brand->seo_title) }}" />
-                            @error('seo_title')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="seo_description" class="label-text">SEO Description</label>
-                            <textarea class="textarea @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                                rows="3">{{ old('seo_description', $brand->seo_description) }}</textarea>
-                            @error('seo_description')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="SEO Title" name="seo_title" :value="$brand->seo_title" />
+                        <x-form.textarea label="SEO Description" name="seo_description" :value="$brand->seo_description"
+                            rows="3" />
                     </div>
                 </div>
             </div>

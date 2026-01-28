@@ -18,20 +18,34 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Orders" />
 
-        <x-admin.table.search />
-
         {{-- Orders Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Order</th>
-                            <th scope="col">Customer</th>
-                            <th scope="col">Order Date</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="order_number" :current-sort="request('sort')">
+                                    Order #
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="user_id" :current-sort="request('sort')">
+                                    Customer
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="order_date" :current-sort="request('sort')">
+                                    Order Date
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col">Status</th>
                             <th scope="col" class="text-center">Payment Status</th>
-                            <th scope="col">Grand Total</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="grand_total" :current-sort="request('sort')">
+                                    Grand Total
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>
                             </th>
@@ -48,14 +62,12 @@
                                 <td>{{ $order->user->name }}</td>
                                 <td>{{ $order->order_date->format(setting('general.date_format')) }}</td>
                                 <td>
-                                    <span
-                                        class="inline-flex items-center rounded-md bg-{{ $order->status->color() }}-50 px-2 py-1 text-xs font-medium text-{{ $order->status->color() }}-600 ring-1 ring-{{ $order->status->color() }}-500/10 ring-inset">
+                                    <span class="badge badge-soft badge-{{ $order->status->color() }}">
                                         {{ $order->status->label() }}
                                     </span>
                                 </td>
                                 <td class="text-center">
-                                    <span
-                                        class="inline-flex items-center rounded-md bg-{{ $order->payment_status->color() }}-50 px-2 py-1 text-xs font-medium text-{{ $order->payment_status->color() }}-600 ring-1 ring-{{ $order->payment_status->color() }}-500/10 ring-inset">
+                                    <span class="badge badge-soft badge-{{ $order->payment_status->color() }}">
                                         {{ $order->payment_status->label() }}
                                     </span>
                                 </td>

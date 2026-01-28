@@ -18,16 +18,22 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Brands" :addNewAction="route('admin.brands.create')" />
 
-        <x-admin.table.search />
-
         {{-- Brands Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Slug</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="name" :current-sort="request('sort')">
+                                    Brand Name
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="slug" :current-sort="request('sort')">
+                                    Slug
+                                </x-admin.table.sortable-header>
+                            </th>
                             <th scope="col" class="text-center">Products</th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>

@@ -36,7 +36,7 @@
                 </button>
             </div>
             <div class="navbar-end flex items-center gap-4">
-                <button class="btn btn-sm btn-text btn-square size-8.5 md:hidden" aria-haspopup="dialog"
+                <button class="btn btn-sm btn-text btn-square size-8.5 lg:hidden" aria-haspopup="dialog"
                     aria-expanded="false" aria-controls="product-search-modal" data-overlay="#product-search-modal">
                     <span class="icon-[tabler--search] size-5.5"></span>
                 </button>
@@ -63,53 +63,56 @@
                     </button>
                 </div>
 
-                @auth
-                    <!-- Desktop: User dropdown for authenticated users -->
-                    <div class="dropdown relative inline-flex [--offset:21]">
-                        <button id="desktop-profile-dropdown" type="button" class="dropdown-toggle avatar"
-                            aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
-                            <div class="avatar avatar-placeholder">
-                                <div class="bg-primary/10 text-primary w-10 rounded-full">
-                                    <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
-                                </div>
-                            </div>
-                        </button>
-                        <ul class="dropdown-menu dropdown-open:opacity-100 max-w-75 hidden w-full space-y-0.5"
-                            role="menu" aria-orientation="vertical" aria-labelledby="desktop-profile-dropdown">
-                            <li class="dropdown-header pt-4.5 mb-1 gap-4 px-5 pb-3.5">
+                <div class="hidden lg:block lg:space-x-2">
+                    @auth
+                        <!-- Desktop: User dropdown for authenticated users -->
+                        <div class="dropdown relative inline-flex [--offset:21]">
+                            <button id="desktop-profile-dropdown" type="button" class="dropdown-toggle avatar"
+                                aria-haspopup="menu" aria-expanded="false" aria-label="Dropdown">
                                 <div class="avatar avatar-placeholder">
                                     <div class="bg-primary/10 text-primary w-10 rounded-full">
                                         <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
                                     </div>
                                 </div>
-                                <div>
-                                    <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
-                                    </h6>
-                                    <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
-                                </div>
-                            </li>
-                            <li class="mb-1">
-                                <a class="dropdown-item px-3" href="{{ route('profile.edit') }}">
-                                    <span class="icon-[tabler--user] size-5"></span>
-                                    Edit Profile
-                                </a>
-                            </li>
-                            <li class="dropdown-footer p-2 pt-1">
-                                <form action="{{ route('logout') }}" method="POST" class="w-full">
-                                    @csrf
-                                    <button class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
-                                        <span class="icon-[tabler--logout] size-5"></span>
-                                        Logout
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                @else
-                    <!-- Desktop: Auth buttons for guests -->
-                    <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
-                @endauth
+                            </button>
+                            <ul class="dropdown-menu dropdown-open:opacity-100 max-w-75 hidden w-full space-y-0.5"
+                                role="menu" aria-orientation="vertical" aria-labelledby="desktop-profile-dropdown">
+                                <li class="dropdown-header pt-4.5 mb-1 gap-4 px-5 pb-3.5">
+                                    <div class="avatar avatar-placeholder">
+                                        <div class="bg-primary/10 text-primary w-10 rounded-full">
+                                            <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
+                                        </h6>
+                                        <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
+                                    </div>
+                                </li>
+                                <li class="mb-1">
+                                    <a class="dropdown-item px-3" href="{{ route('profile.edit') }}">
+                                        <span class="icon-[tabler--user] size-5"></span>
+                                        Edit Profile
+                                    </a>
+                                </li>
+                                <li class="dropdown-footer p-2 pt-1">
+                                    <form action="{{ route('logout') }}" method="POST" class="w-full">
+                                        @csrf
+                                        <button
+                                            class="btn btn-text btn-error btn-block h-11 justify-start px-3 font-normal">
+                                            <span class="icon-[tabler--logout] size-5"></span>
+                                            Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    @else
+                        <!-- Desktop: Auth buttons for guests -->
+                        <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
+                        <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+                    @endauth
+                </div>
             </div>
         </nav>
     </div>
@@ -121,6 +124,37 @@
                 <a class="text-gray-600 hover:text-primary nav-link"
                     href="{{ $item['link'] }}">{{ $item['title'] }}</a>
             @endforeach
+        </div>
+        <div class="lg:hidden block gap-2 mt-6">
+            @auth
+                <div class="w-full inline-flex pt-4.5 mb-1 gap-4 px-5 pb-3.5">
+                    <div class="avatar avatar-placeholder">
+                        <div class="bg-primary/10 text-primary w-10 rounded-full">
+                            <span class="text-md uppercase">{{ Auth::user()->abbr }}</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h6 class="text-base-content font-semibold">{{ Auth::user()->name }}
+                        </h6>
+                        <p class="text-base-content/60 text-sm">{{ Auth::user()->email }}</p>
+                    </div>
+                </div>
+                <a class="text-gray-600 hover:text-primary w-full block my-2" href="{{ route('profile.edit') }}">
+                    <span class="icon-[tabler--user] size-5"></span>
+                    Edit Profile
+                </a>
+
+                <form action="{{ route('logout') }}" method="POST" class="w-full">
+                    @csrf
+                    <button class="btn btn-soft btn-error">
+                        <span class="icon-[tabler--logout] size-5"></span>
+                        Logout
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-outline btn-primary">Login</a>
+                <a href="{{ route('register') }}" class="btn btn-primary">Register</a>
+            @endauth
         </div>
     </div>
 </div>

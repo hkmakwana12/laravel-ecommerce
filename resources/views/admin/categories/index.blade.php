@@ -18,18 +18,30 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks title="Categories" :addNewAction="route('admin.categories.create')" />
 
-        <x-admin.table.search />
-
         {{-- Category Table --}}
         <div class="card">
             <div class="overflow-x-auto">
                 <table class="table mb-0">
                     <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Parent Category</th>
-                            <th scope="col">Slug</th>
-                            <th scope="col" class="text-center">Products</th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="name" :current-sort="request('sort')">
+                                    Category Name
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="parent_id" :current-sort="request('sort')">
+                                    Parent Category
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col">
+                                <x-admin.table.sortable-header field="slug" :current-sort="request('sort')">
+                                    Slug
+                                </x-admin.table.sortable-header>
+                            </th>
+                            <th scope="col" class="text-center">
+                                Products Count
+                            </th>
                             <th scope="col" class="relative">
                                 <span class="sr-only">Actions</span>
                             </th>

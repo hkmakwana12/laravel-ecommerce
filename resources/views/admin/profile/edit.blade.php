@@ -31,25 +31,8 @@
                         <h5 class="text-base-content text-lg font-medium">Basic Info</h5>
                     </div>
                     <div class="card-body space-y-2">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name"
-                                class="input @error('name') is-invalid @enderror"
-                                value="{{ old('name', $user->name) }}" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="email" class="label-text">Email</label>
-                            <input type="text" name="email" id="email"
-                                class="input @error('email') is-invalid @enderror"
-                                value="{{ old('email', $user->email) }}" />
-                            @error('email')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$user->name" required autofocus />
+                        <x-form.input label="Email" name="email" :value="$user->email" required />
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Save Changes</button>
@@ -67,38 +50,10 @@
                         <h5 class="text-base-content text-lg font-medium">Change Password</h5>
                     </div>
                     <div class="card-body space-y-2">
-                        <div class="space-y-1">
-                            <label for="update_password_current_password" class="label-text">
-                                Current Password
-                            </label>
-                            <input type="password" name="current_password" id="update_password_current_password"
-                                class="input @error('current_password', 'updatePassword') is-invalid @enderror" />
-                            @error('current_password', 'updatePassword')
-                                <p class="helper-text">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="update_password_password" class="label-text">New Password</label>
-                            <input type="password" name="password" id="update_password_password"
-                                class="input @error('password', 'updatePassword') is-invalid @enderror"
-                                class="input @error('password', 'updatePassword') is-invalid @enderror" />
-                            @error('password', 'updatePassword')
-                                <p class="helper-text">{{ $message }}</p>
-                            @enderror
-                        </div>
-
-                        <div class="space-y-1">
-                            <label for="update_password_password_confirmation" class="label-text">Confirm
-                                Password</label>
-                            <input type="password" name="password_confirmation"
-                                id="update_password_password_confirmation"
-                                class="input @error('password_confirmation', 'updatePassword') is-invalid @enderror"
-                                class="input @error('password_confirmation', 'updatePassword') is-invalid @enderror" />
-                            @error('password_confirmation', 'updatePassword')
-                                <p class="helper-text">{{ $message }}</p>
-                            @enderror
-                        </div>
+                        <x-form.password label="Current Password" name="current_password" type="password" required />
+                        <x-form.password label="New Password" name="password" type="password" required />
+                        <x-form.password label="Confirm Password" name="password_confirmation" type="password"
+                            required />
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">Save Changes</button>

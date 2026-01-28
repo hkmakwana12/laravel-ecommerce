@@ -31,14 +31,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label for="name" class="label-text">Name</label>
-                            <input type="text" name="name" id="name" value="{{ old('name', $tax->name) }}"
-                                class="input @error('name') is-invalid @enderror" />
-                            @error('name')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Name" name="name" :value="$tax->name" required autofocus />
 
                         <div class="space-y-1">
                             <label for="type" class="label-text">Type</label>
@@ -54,14 +47,7 @@
                             @enderror
                         </div>
 
-                        <div class="space-y-1">
-                            <label for="rate" class="label-text">Rate</label>
-                            <input type="text" name="rate" id="rate" value="{{ old('rate', $tax->rate) }}"
-                                class="input @error('rate') is-invalid @enderror" />
-                            @error('rate')
-                                <span class="helper-text">{{ $message }}</span>
-                            @enderror
-                        </div>
+                        <x-form.input label="Rate" name="rate" :value="$tax->rate" required />
                     </div>
                 </div>
             </div>

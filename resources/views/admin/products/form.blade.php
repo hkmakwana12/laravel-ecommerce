@@ -19,7 +19,6 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks :title=$title :goBackAction="route('admin.products.index')" />
 
-
         <form method="post"
             action="{{ $product->id ? route('admin.products.update', $product) : route('admin.products.store') }}"
             enctype="multipart/form-data">
@@ -36,21 +35,13 @@
                             title: '{{ addslashes(old('name', $product->name)) }}',
                             slug: '{{ old('slug', $product->slug) }}'
                         }">
-                            <div class="space-y-1">
-                                <label for="name" class="label-text">Name</label>
-                                <input type="text" name="name" id="name"
-                                    class="input @error('name') is-invalid @enderror" x-model="title"
-                                    @input="slug = slugify(title)" />
-                                @error('name')
-                                    <span class="helper-text">{{ $message }}</span>
-                                @enderror
+                            <x-form.input label="Name" name="name" :value="$product->name" x-model="title"
+                                @input="slug = slugify(title)" autofocus required />
 
-                                <p class="text-sm text-gray-600">
-                                    <strong>Slug : </strong>
-                                    <span x-text="slug"></span>
-                                    <input type="hidden" name="slug" :value="slug" />
-                                </p>
-                            </div>
+                            <p class="text-sm text-gray-600">
+                                <strong>Slug : </strong>
+                                <span x-text="slug"></span>
+                                <input type="hidden" name="slug" :value="slug" />
                         </div>
                     </div>
 
@@ -67,113 +58,54 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-body">
                             <h3 class="text-base-content text-lg font-medium">Pricing</h3>
-                        </div>
-                        <div class="card-body">
                             <div class="grid md:grid-cols-2 gap-4">
-                                <div class="space-y-1">
-                                    <label for="regular_price" class="label-text">Regular Price</label>
-                                    <input type="text" name="regular_price" id="regular_price"
-                                        class="input @error('regular_price') is-invalid @enderror"
-                                        value="{{ old('regular_price', $product->regular_price) }}" />
-                                    @error('regular_price')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="space-y-1">
-                                    <label for="selling_price" class="label-text">Selling Price</label>
-                                    <input type="text" name="selling_price" id="selling_price"
-                                        class="input @error('selling_price') is-invalid @enderror"
-                                        value="{{ old('selling_price', $product->selling_price) }}" />
-                                    @error('selling_price')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <x-form.input label="Regular Price" name="regular_price" :value="$product->regular_price" required />
+                                <x-form.input label="Selling Price" name="selling_price" :value="$product->selling_price" required />
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
+                        <div class="card-body">
                             <h3 class="text-base-content text-lg font-medium">Inventory</h3>
-                        </div>
-                        <div class="card-body">
                             <div class="grid md:grid-cols-2 gap-4">
-                                <div class="space-y-1">
-                                    <label for="sku" class="label-text">SKU (Stock Keeping
-                                        Unit)</label>
-                                    <input type="text" name="sku" id="sku"
-                                        class="input @error('sku') is-invalid @enderror"
-                                        value="{{ old('sku', $product->sku) }}" />
-                                    @error('sku')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
-
-                                <div class="space-y-1">
-                                    <label for="barcode" class="label-text">Barcode (ISBN, UPC, GTIN,
-                                        etc.)</label>
-                                    <input type="text" name="barcode" id="barcode"
-                                        class="input @error('barcode') is-invalid @enderror"
-                                        value="{{ old('barcode', $product->barcode) }}" />
-                                    @error('barcode')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <x-form.input label="SKU (Stock Keeping Unit)" name="sku" :value="$product->sku" />
+                                <x-form.input label="Barcode (ISBN, UPC, GTIN, etc.)" name="barcode"
+                                    :value="$product->barcode" />
                             </div>
                         </div>
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">SEO</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">SEO</h3>
                             <div class="grid gap-4">
-                                <div class="space-y-1">
-                                    <label for="seo_title" class="label-text">SEO Title</label>
-                                    <input type="text" name="seo_title" id="seo_title"
-                                        class="input @error('seo_title') is-invalid @enderror"
-                                        value="{{ old('seo_title', $product->seo_title) }}" />
-                                    @error('seo_title')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                <x-form.input label="SEO Title" name="seo_title" :value="$product->seo_title" />
 
-                                <div class="space-y-1">
-                                    <label for="seo_description" class="label-text">SEO
-                                        Description</label>
-                                    <textarea class="textarea @error('seo_description') is-invalid @enderror" id="seo_description" name="seo_description"
-                                        rows="3">{{ old('seo_description', $product->seo_description) }}</textarea>
-                                    @error('seo_description')
-                                        <span class="helper-text">{{ $message }}</span>
-                                    @enderror
-                                </div>
+
+                                <x-form.textarea label="SEO Description" name="seo_description" :value="$product->seo_description"
+                                    rows="3" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-12 lg:col-span-4  space-y-6">
+                <div class="col-span-12 lg:col-span-4 space-y-6">
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Status</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Status</h3>
                             <div class="flex items-center gap-1">
                                 <input type="hidden" name="is_featured" value="0" />
-                                <input type="checkbox" class="switch switch-primary" id="is_featured"
-                                    name="is_featured" value="1" @checked(old('is_featured', $product->is_featured)) />
+                                <input type="checkbox" class="switch switch-primary" id="is_featured" name="is_featured"
+                                    value="1" @checked(old('is_featured', $product->is_featured)) />
                                 <label class="label-text text-base" for="is_featured"> Featured Product </label>
                             </div>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Associations</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Associations</h3>
                             <div class="space-y-4">
                                 <div class="space-y-1">
                                     <label for="brand_id" class="label-text">Brand</label>
@@ -229,10 +161,8 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Featured Image</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Featured Image</h3>
                             <div class="space-y-1">
                                 <input id="featured-image" name="featured-image" type="file"
                                     @class(['input', 'is-invalid' => $errors->has('category_id')]) />
@@ -244,10 +174,8 @@
                     </div>
 
                     <div class="card">
-                        <div class="card-header">
-                            <h3 class="text-base-content text-lg font-medium">Product Gallery Images</h3>
-                        </div>
                         <div class="card-body">
+                            <h3 class="text-base-content text-lg font-medium">Product Gallery Images</h3>
                             <div class="space-y-1">
                                 <input id="product-images" name="product-images[]" type="file"
                                     @class(['input', 'is-invalid' => $errors->has('category_id')]) multiple />

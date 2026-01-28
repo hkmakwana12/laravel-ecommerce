@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\Admin\TaxController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -49,11 +50,7 @@ Route::get('/login',  [LoginController::class, 'index'])->name('login')->middlew
 Route::post('/login', [LoginController::class, 'login'])->name('login.post')->middleware('guest:admin');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
-
-Route::get('/', function () {
-    return view('admin.dashboard');
-})->name('dashboard')->middleware('auth:admin');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth:admin');
 
 Route::group(['middleware' => 'auth:admin'], function () {
 
@@ -75,7 +72,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     Route::post('payments/store/{order}', [PaymentController::class, 'store'])->name('payments.store');
 
     Route::resource('users', UserController::class)->except(['show']);
-    Route::get('users/search', [UserController::class, 'search'])->name('users.search');
 
     /**
      * Banner Route

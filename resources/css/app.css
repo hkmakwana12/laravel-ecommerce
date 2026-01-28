@@ -31,3 +31,12 @@
 body {
     color: color-mix(in oklab, var(--color-base-content) 80%, transparent);
 }
+
+[x-cloak] {
+    display: none;
+}
+
+label.required::after {
+    content: ' *';
+    color: var(--color-error);
+}

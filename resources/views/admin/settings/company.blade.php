@@ -18,12 +18,11 @@
 
         <x-admin.breadcrumb :links=$breadcrumbLinks :title=$title />
 
-
-        <form method="post" action="{{ route('admin.settings.store') }}">
+        <form method="post" action="{{ route('admin.settings.store') }}" class="space-y-6">
             @csrf
 
             <input type="hidden" name="group_name" value="company" />
-            <div class="card mb-6">
+            <div class="card">
                 <div class="card-body" x-data="companyAddressInfo()">
                     <div class="grid md:grid-cols-2 gap-4">
 

@@ -27,6 +27,18 @@ Route::post('/fetch-states', function (Request $request) {
     return response()->json($data);
 })->name('fetchState');
 
+Route::get('/test-ai', function () {
+
+    $service = app(\App\Services\OtcProductAiService::class);
+
+    $text = $service->generate([
+        'name' => 'CURAD ADH BAND FLEX 3/4X2.5 40',
+        'category' => 'OTC Medicine',
+        'market' => 'USA',
+    ]);
+
+    dd($text);
+});
 
 /* Route::get('/demo', function () {
     Demo::dispatch();

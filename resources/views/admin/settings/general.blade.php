@@ -26,10 +26,8 @@
 
             <input type="hidden" name="group_name" value="general" />
             <div class="card">
-                <div class="card-header">
-                    <h3 class="text-base-content text-lg font-medium">App Settings</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-base-content text-lg font-medium">App Settings</h3>
                     <div class="grid lg:grid-cols-3 gap-4">
                         <div class="space-y-1">
                             <div class="flex justify-between">
@@ -231,10 +229,8 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <h3 class="text-base-content text-lg font-medium">Cloudflare Captcha</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-base-content text-lg font-medium">Cloudflare Captcha</h3>
                     <div class="grid lg:grid-cols-3 gap-4">
 
                         <!----- Re-captcha -------------->
@@ -292,10 +288,8 @@
             </div>
 
             <div class="card">
-                <div class="card-header">
-                    <h3 class="text-base-content text-lg font-medium">Logo & Favicon</h3>
-                </div>
                 <div class="card-body">
+                    <h3 class="text-base-content text-lg font-medium">Logo & Favicon</h3>
                     <div class="grid md:grid-cols-2 gap-4">
 
                         <!----- Logo And Favicon -------------->
@@ -328,9 +322,7 @@
                 </div>
             </div>
 
-            <div class="mt-6 space-x-2">
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
     </div>
 </x-layouts.admin>
