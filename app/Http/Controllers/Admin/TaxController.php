@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Tax\StoreRequest as TaxStoreRequest;
 use App\Http\Requests\Admin\Tax\UpdateRequest as TaxUpdateRequest;
 use App\Models\Tax;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaxController extends Controller
 {
@@ -15,10 +17,17 @@ class TaxController extends Controller
      */
     public function index()
     {
-        $taxes = Tax::latest()
-            ->search(request('query'))
+        $taxes = QueryBuilder::for(Tax::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->allowedSorts(['name', 'type', 'rate'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.taxes.index', compact('taxes'));
     }

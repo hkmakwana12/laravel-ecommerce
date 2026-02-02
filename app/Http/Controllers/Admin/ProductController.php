@@ -10,6 +10,8 @@ use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 use Symfony\Component\DomCrawler\Crawler;
 
 class ProductController extends Controller
@@ -19,11 +21,19 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()
+        $products = QueryBuilder::for(Product::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
             ->with(['brand', 'category', 'media'])
-            ->search(request('query'))
+            ->allowedSorts(['name', 'category_id', 'brand_id'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
+
 
         return view('admin.products.index', compact('products'));
     }

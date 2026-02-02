@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Coupon\StoreRequest as CouponStoreRequest;
 use App\Http\Requests\Admin\Coupon\UpdateRequest as CouponUpdateRequest;
 use App\Models\Coupon;
-use App\Settings\GeneralSetting;
-use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CouponController extends Controller
 {
@@ -16,10 +16,17 @@ class CouponController extends Controller
      */
     public function index()
     {
-        $coupons = Coupon::latest()
-            ->search(request('query'))
+        $coupons = QueryBuilder::for(Coupon::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->allowedSorts(['code', 'value', 'start_date', 'end_date'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.coupons.index', compact('coupons'));
     }

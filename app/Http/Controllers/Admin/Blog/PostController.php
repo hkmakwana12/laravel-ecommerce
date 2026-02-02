@@ -8,6 +8,8 @@ use App\Http\Requests\Admin\Blog\Post\UpdateRequest as BlogPostUpdateRequest;
 use App\Models\Blog\Category as BlogCategory;
 use App\Models\Blog\Post as BlogPost;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PostController extends Controller
 {
@@ -16,10 +18,18 @@ class PostController extends Controller
      */
     public function index()
     {
-        $blog_posts = BlogPost::latest()
-            ->search(request('query'))
+        $blog_posts = QueryBuilder::for(BlogPost::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->with('blogCategory')
+            ->allowedSorts(['title', 'slug', 'blog_category_id'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.blogs.posts.index', compact('blog_posts'));
     }

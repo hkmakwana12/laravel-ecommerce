@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Category\StoreRequest as CategoryStoreRequest;
 use App\Http\Requests\Admin\Category\UpdateRequest as CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CategoryController extends Controller
 {
@@ -15,11 +17,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()
+        $categories = QueryBuilder::for(Category::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
             ->withCount("products")
-            ->search(request("query"))
+            ->allowedSorts(['name', 'slug', 'parent_id'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view("admin.categories.index", compact("categories"));
     }

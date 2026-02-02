@@ -2,7 +2,6 @@
     <div class="max-w-7xl mx-auto space-y-6">
         <h1 class="text-base-content text-3xl font-semibold">Dashboard</h1>
 
-        <!-- Statistics Cards (Flyon `stats` style) -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <div class="stats max-sm:w-full">
                 <div class="stat">
@@ -70,7 +69,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Order ID</th>
+                            <th>Order #</th>
                             <th>Customer</th>
                             <th>Status</th>
                             <th>Total</th>
@@ -80,7 +79,7 @@
                     <tbody>
                         @foreach ($recentOrders as $order)
                             <tr>
-                                <td class="font-medium">#{{ $order->order_number }}</td>
+                                <td class="font-medium">{{ $order->order_number }}</td>
                                 <td>{{ $order->user->name ?? 'N/A' }}</td>
                                 <td>
                                     <span

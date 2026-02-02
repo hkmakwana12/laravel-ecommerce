@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Brand\StoreRequest as BrandStoreRequest;
 use App\Http\Requests\Admin\Brand\UpdateRequest as BrandUpdateRequest;
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class BrandController extends Controller
 {
@@ -15,11 +17,18 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::latest()
-            ->withCount('products')
-            ->search(request('query'))
+        $brands = QueryBuilder::for(Brand::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->withCount("products")
+            ->allowedSorts(['name', 'slug'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.brands.index', compact('brands'));
     }

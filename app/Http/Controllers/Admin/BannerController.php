@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Banner\StoreRequest as BannerStoreRequest;
 use App\Http\Requests\Admin\Banner\UpdateRequest as BannerUpdateRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class BannerController extends Controller
 {
@@ -15,10 +17,17 @@ class BannerController extends Controller
      */
     public function index()
     {
-        $banners = Banner::latest()
-            ->search(request('query'))
+        $banners = QueryBuilder::for(Banner::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->allowedSorts([])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.banners.index', compact('banners'));
     }

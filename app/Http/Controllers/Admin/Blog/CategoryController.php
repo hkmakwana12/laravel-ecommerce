@@ -7,6 +7,8 @@ use App\Http\Requests\Admin\Blog\Category\StoreRequest as BlogCategoryStoreReque
 use App\Http\Requests\Admin\Blog\Category\UpdateRequest as BlogCategoryUpdateRequest;
 use App\Models\Blog\Category as BlogCategory;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class CategoryController extends Controller
 {
@@ -15,11 +17,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $blog_categories = BlogCategory::latest()
+        $blog_categories = QueryBuilder::for(BlogCategory::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
             ->withCount('posts')
-            ->search(request('query'))
+            ->allowedSorts(['title', 'slug', 'blog_category_id'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.blogs.categories.index', compact('blog_categories'));
     }

@@ -6,16 +6,24 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Subscriber\StoreRequest as SubscriberStoreRequest;
 use App\Http\Requests\Admin\Subscriber\UpdateRequest as SubscriberUpdateRequest;
 use App\Models\Subscriber;
-use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SubscriberController extends Controller
 {
     public function index()
     {
-        $subscribers = Subscriber::latest()
-            ->search(request('query'))
+        $subscribers = QueryBuilder::for(Subscriber::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
+            ->allowedSorts(['name', 'email'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.subscribers.index', compact('subscribers'));
     }
