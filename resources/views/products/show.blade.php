@@ -15,6 +15,18 @@
             ],
             'title' => $product->name,
         ];
+
+        $images = collect();
+
+        // Add thumbnail as first image
+        if ($product?->thumbnailURL()) {
+            $images->push($product->thumbnailURL());
+        }
+
+        // Add media collection images
+        foreach ($product?->getMedia('product-images') as $image) {
+            $images->push($image->getUrl());
+        }
     @endphp
 
     @include('components.common.breadcrumb', $breadcrumbs)
@@ -29,16 +41,10 @@
                     <div class="carousel flex flex-col gap-6 rounded-none">
                         <div class="rounded-box relative grow overflow-hidden">
                             <div class="carousel-body h-142 max-sm:h-83">
-                                <div class="carousel-slide">
-                                    <div class="flex size-full justify-center">
-                                        <img src="{{ $product->thumbnailURL() }}" class="size-full object-cover"
-                                            alt="{{ $product?->name }}" />
-                                    </div>
-                                </div>
-                                @foreach ($product?->getMedia('product-images') as $image)
+                                @foreach ($images as $imageUrl)
                                     <div class="carousel-slide">
                                         <div class="flex size-full justify-center">
-                                            <img src="{{ $image->getUrl() }}" class="size-full object-cover"
+                                            <img src="{{ $imageUrl }}" class="size-full object-cover"
                                                 alt="{{ $product?->name }}" />
                                         </div>
                                     </div>
@@ -59,11 +65,8 @@
                         </div>
 
                         <div class="carousel-pagination flex flex-none justify-between gap-5 overflow-x-auto">
-                            <img src="{{ $product->thumbnailURL() }}"
-                                class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30 rounded-box size-16"
-                                alt="{{ $product?->name }}" />
-                            @foreach ($product?->getMedia('product-images') as $image)
-                                <img src="{{ $image->getUrl() }}"
+                            @foreach ($images as $imageUrl)
+                                <img src="{{ $imageUrl }}"
                                     class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30 rounded-box size-16"
                                     alt="{{ $product?->name }}" />
                             @endforeach

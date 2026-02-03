@@ -70,6 +70,18 @@
             'group' => 'Management',
         ],
         [
+            'name' => 'Attributes',
+            'route' => route('admin.attributes.index'),
+            'active' => ($active = request()->routeIs('admin.attributes.*')),
+            'icon' => 'icon-[tabler--menu-4]',
+        ],
+        [
+            'name' => 'Attribute Options',
+            'route' => route('admin.attribute-options.index'),
+            'active' => ($active = request()->routeIs('admin.attribute-options.*')),
+            'icon' => 'icon-[tabler--menu-deep]',
+        ],
+        [
             'name' => 'Users',
             'route' => route('admin.users.index'),
             'active' => ($active = request()->routeIs('admin.users.*')),

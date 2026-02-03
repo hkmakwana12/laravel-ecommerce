@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -37,7 +38,6 @@ class Product extends Model implements HasMedia
         'is_featured' => 'boolean',
         'regular_price' => 'decimal:2',
         'selling_price' => 'decimal:2',
-        'stock' => 'integer',
     ];
 
     /* public function getRouteKeyName(): string
@@ -66,6 +66,16 @@ class Product extends Model implements HasMedia
     public function scopeFeatured($query)
     {
         return $query->where('is_featured', true);
+    }
+
+    public function defaultVariant()
+    {
+        return $this->hasOne(ProductVariant::class);
+    }
+
+    public function variants(): HasMany
+    {
+        return $this->hasMany(ProductVariant::class);
     }
 
     public function brand(): BelongsTo

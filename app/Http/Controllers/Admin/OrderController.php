@@ -17,6 +17,8 @@ use App\Settings\CompanySetting;
 use App\Settings\GeneralSetting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class OrderController extends Controller
 {
@@ -27,11 +29,18 @@ class OrderController extends Controller
     {
         $generalSetting = new GeneralSetting();
 
-        $orders = Order::latest()
+        $orders = QueryBuilder::for(Order::class)
+            ->allowedFilters([
+                // Global search across multiple fields
+                AllowedFilter::callback('search', function ($query, $value) {
+                    $query->search($value);
+                }),
+            ])
             ->with(['user'])
-            ->search(request('query'))
+            ->allowedSorts(['order_number', 'user_id', 'order_date', 'grand_total'])
+            ->defaultSort('-created_at')
             ->paginate()
-            ->withQueryString();
+            ->appends(request()->query());
 
         return view('admin.orders.index', compact('orders', 'generalSetting'));
     }

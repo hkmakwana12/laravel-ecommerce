@@ -17,6 +17,8 @@ use App\Http\Controllers\Admin\SubscriberController;
 use App\Http\Controllers\Admin\TaxController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AttributeController;
+use App\Http\Controllers\Admin\AttributeOptionController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -85,7 +87,9 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::resource('contactQueries', ContactQueryController::class)->except(['store']);
 
-    Route::resource('subscribers', SubscriberController::class);
+    Route::resource('subscribers', SubscriberController::class)->except(['show']);
+    Route::resource('attributes', AttributeController::class)->except(['show']);
+    Route::resource('attribute-options', AttributeOptionController::class)->except(['show']);
 
     /**
      * Routes For Blog Categories
