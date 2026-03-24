@@ -19,6 +19,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\AttributeController;
 use App\Http\Controllers\Admin\AttributeOptionController;
+use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\ProductVariantController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -64,6 +66,16 @@ Route::group(['middleware' => 'auth:admin'], function () {
 
     Route::resource('products', ProductController::class)->except(['show']);
     Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
+
+    Route::get('products/{product?}/variant', [ProductVariantController::class, 'index'])->name('products.variant');
+    Route::put('products/{product}/variant', [ProductVariantController::class, 'storeVariant'])->name('products.storeVariant');
+
+    Route::get('products/{product?}/seo', [ProductController::class, 'seo'])->name('products.seo');
+    Route::put('products/{product}/seo', [ProductController::class, 'storeSeo'])->name('products.storeSeo');
+
+    Route::get('products/{product?}/image', [ProductImageController::class, 'index'])->name('products.image');
+    Route::put('products/{product}/image', [ProductImageController::class, 'storeImage'])->name('products.storeImage');
+    Route::delete('products/{product}/image', [ProductImageController::class, 'deleteImage'])->name('products.deleteImage');
 
     Route::get('products/import', [ProductController::class, 'import'])->name('products.import');
     Route::post('products/import', [ProductController::class, 'importStore'])->name('products.import.store');

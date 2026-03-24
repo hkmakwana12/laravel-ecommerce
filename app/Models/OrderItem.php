@@ -4,12 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class OrderItem extends Model
 {
     protected $fillable = [
         'order_id',
         'product_id',
+        'variant_id',
         'quantity',
         'price',
         'tax_rate',
@@ -34,7 +36,12 @@ class OrderItem extends Model
         return $this->belongsTo(Product::class);
     }
 
-    public function taxes()
+    public function variant(): BelongsTo
+    {
+        return $this->belongsTo(ProductVariant::class, 'variant_id');
+    }
+
+    public function taxes(): MorphMany
     {
         return $this->morphMany(Taxable::class, 'taxable');
     }

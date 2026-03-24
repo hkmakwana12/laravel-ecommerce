@@ -37,7 +37,9 @@ class AuthenticatedSessionController extends Controller
          * Merge Cart Items
          */
         foreach ($oldCart->items as $item) {
-            $existingItem = $newCart->items()->where('product_id', $item->product_id)->first();
+            $existingItem = $newCart->items()
+                ->where('variant_id', $request->variant_id)
+                ->first();
 
             if ($existingItem) {
                 $existingItem->increment('quantity', $item->quantity);
@@ -45,6 +47,7 @@ class AuthenticatedSessionController extends Controller
                 // Add new items to logged-in user's cart
                 $newCart->items()->create([
                     'product_id' => $item->product_id,
+                    'variant_id' => $item->variant_id,
                     'quantity' => $item->quantity,
                 ]);
             }

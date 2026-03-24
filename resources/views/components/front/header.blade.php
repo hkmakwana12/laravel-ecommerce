@@ -200,7 +200,7 @@
                                                 </button>
                                                 <input class="text-center" type="text"
                                                     value="{{ $product->quantity }}"
-                                                    name="quantity[{{ $product->product_id }}]"
+                                                    name="quantity[{{ $product->variant_id }}]"
                                                     aria-label="Mini stacked buttons" data-input-number-input
                                                     id="number-input-mini" readonly />
                                                 <button type="button"
@@ -217,7 +217,7 @@
                         <div class="flex flex-col items-end gap-3">
                             <div class="text-base-content text-lg font-medium whitespace-nowrap">@money($product->total)
                             </div>
-                            <a href="{{ route('account.removeFromCart', $product->product_id) }}"
+                            <a href="{{ route('account.removeFromCart', $product->variant_id) }}"
                                 class="btn btn-square btn-text btn-sm" aria-label="Delete Item">
                                 <span class="icon-[tabler--trash] size-6 shrink-0"></span>
                             </a>

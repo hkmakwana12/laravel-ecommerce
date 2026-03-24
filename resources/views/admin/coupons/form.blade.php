@@ -28,7 +28,7 @@
             @endisset
             <div class="card">
                 <div class="card-body">
-                    <div class="grid md:grid-cols-2 gap-4 py-2">
+                    <div class="grid md:grid-cols-2 gap-4">
 
                         <x-form.input label="Coupon Code" name="code" :value="$coupon->code" required autofocus />
 
@@ -36,7 +36,7 @@
                             wrapperClass="col-span-2" />
                     </div>
 
-                    <div class="grid md:grid-cols-3 gap-4 py-2">
+                    <div class="grid md:grid-cols-3 gap-4">
                         <div class="space-y-1">
                             <label for="type" class="label-text">Discount Type</label>
                             <select name="type" id="type" class="select @error('type') is-invalid @enderror">

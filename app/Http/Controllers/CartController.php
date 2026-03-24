@@ -24,7 +24,7 @@ class CartController extends Controller
         $cart = cart();
 
         $cartItem = $cart?->items()
-            ->where('product_id', $request->product_id)
+            ->where('variant_id', $request->variant_id)
             ->first();
 
         if ($cartItem) {
@@ -34,6 +34,7 @@ class CartController extends Controller
                 ->create(
                     [
                         'product_id' => $request->product_id,
+                        'variant_id' => $request->variant_id,
                         'quantity' => $request->quantity,
                     ]
                 );
@@ -47,9 +48,9 @@ class CartController extends Controller
             ->with('success', 'Product added to cart successfully!!!');
     }
 
-    public function removeFromCart($product_id): RedirectResponse
+    public function removeFromCart($variant_id): RedirectResponse
     {
-        $cartItem = cart()->items()->where('product_id', $product_id)
+        $cartItem = cart()->items()->where('variant_id', $variant_id)
             ->first();
 
         $cartItem->taxes()->delete();
@@ -64,15 +65,15 @@ class CartController extends Controller
     {
         $cart = cart();
 
-        foreach ($request->quantity as $product_id => $quantity) {
+        foreach ($request->quantity as $variant_id => $quantity) {
             $cartItem = $cart?->items()
-                ->where('product_id', $product_id)
+                ->where('variant_id', $variant_id)
                 ->first();
 
             $cartItem->quantity = $quantity;
             $cartItem->save();
 
-            $itemTotal = $cartItem->product->selling_price * $cartItem->quantity;
+            $itemTotal = $cartItem->variant->selling_price * $cartItem->quantity;
 
             applyTaxesToObject($cartItem, $itemTotal);
         }

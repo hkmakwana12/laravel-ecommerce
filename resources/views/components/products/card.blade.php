@@ -17,11 +17,12 @@
                 {{ $product?->name }}
             </a>
         </h3>
-        <p class="text-base-content/80 text-lg font-medium">@money($product->selling_price)</p>
+        <p class="text-base-content/80 text-lg font-medium">@money($product->defaultVariant?->selling_price)</p>
         <form action="{{ route('products.addToCart') }}" method="POST">
             @csrf
             <input type="hidden" name="quantity" value="1" />
             <input type="hidden" name="product_id" value="{{ $product->id }}" />
+            <input type="hidden" name="variant_id" value="{{ $product->defaultVariant?->id }}" />
             <button
                 class="btn not-hover:btn-outline hover:btn-primary hover:btn-gradient border-base-content/20 rounded-box w-full"
                 data-product-name="{{ $product->name }}" aria-label="Add {{ $product->name }} to cart">

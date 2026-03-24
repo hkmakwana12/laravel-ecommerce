@@ -57,33 +57,11 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
 
-        $product = Product::create($request->validated());
-
-        if ($request->hasFile('featured-image')) {
-            $product->addMediaFromRequest('featured-image')
-                ->preservingOriginal()
-                ->toMediaCollection('featured-image');
-        }
-        if ($request->hasFile('product-images')) {
-
-            foreach ($request->file('product-images') as $image) {
-                $product->addMedia($image)
-                    ->preservingOriginal()
-                    ->toMediaCollection('product-images');
-            }
-        }
+        Product::create($request->validated());
 
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Product created successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Product $product)
-    {
-        //
     }
 
     /**
@@ -106,25 +84,25 @@ class ProductController extends Controller
         $product->fill($request->validated());
         $product->save();
 
-        if ($request->hasFile('featured-image')) {
-            $product->clearMediaCollection('featured-image');
-            $product->addMediaFromRequest('featured-image')
-                ->preservingOriginal()
-                ->toMediaCollection('featured-image');
-        }
-
-        if ($request->hasFile('product-images')) {
-            $product->clearMediaCollection('product-images');
-            foreach ($request->file('product-images') as $image) {
-                $product->addMedia($image)
-                    ->preservingOriginal()
-                    ->toMediaCollection('product-images');
-            }
-        }
-
-        return redirect()
-            ->route('admin.products.index')
+        return back()
             ->with('success', 'Product updated successfully.');
+    }
+
+    public function seo(Product $product)
+    {
+        return view('admin.products.seo', compact('product'));
+    }
+
+    public function storeSeo(Request $request, Product $product)
+    {
+        $request->validate([
+            'seo_title' => ['nullable', 'string'],
+            'seo_description' => ['nullable', 'string']
+        ]);
+
+        $product->update($request->only(['seo_title', 'seo_description']));
+
+        return back()->with('success', 'SEO Information updated successfully!!!');
     }
 
     /**

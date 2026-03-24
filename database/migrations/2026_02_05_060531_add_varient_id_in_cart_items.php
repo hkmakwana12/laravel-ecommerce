@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('order_items', function (Blueprint $table) {
+        Schema::table('cart_items', function (Blueprint $table) {
             $table->foreignId('variant_id')->nullable()->constrained('product_variants')->nullOnDelete()->after('product_id');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('order_items', function (Blueprint $table) {
+        Schema::table('cart_items', function (Blueprint $table) {
             $table->dropConstrainedForeignId('variant_id');
             $table->dropColumn('variant_id');
         });

@@ -82,11 +82,11 @@
                     </h1>
                     <div class="flex items-center gap-3">
                         <p class="flex gap-3 items-center">
-                            <span class="text-base-content text-3xl">@money($product->selling_price)</span>
-                            @if ($product->regular_price > $product->selling_price)
-                                <span class="text-2xl text-accent-500 line-through">@money($product->regular_price)</span>
+                            <span class="text-base-content text-3xl">@money($product->defaultVariant?->selling_price)</span>
+                            @if ($product->defaultVariant?->regular_price > $product->defaultVariant?->selling_price)
+                                <span class="text-2xl text-accent-500 line-through">@money($product->defaultVariant?->regular_price)</span>
                                 <span class="badge badge-soft badge-success">
-                                    {{ round((($product->regular_price - $product->selling_price) / $product->regular_price) * 100) }}%
+                                    {{ round((($product->defaultVariant?->regular_price - $product->defaultVariant?->selling_price) / $product->defaultVariant?->regular_price) * 100) }}%
                                     OFF
                                 </span>
                             @endif
@@ -117,6 +117,7 @@
                                 </div>
                             </div>
                             <input type="hidden" name="product_id" value="{{ $product->id }}" />
+                            <input type="hidden" name="variant_id" value="{{ $product->defaultVariant?->id }}" />
                             <button class="btn btn-primary btn-gradient">
                                 <span class="icon-[tabler--shopping-cart] size-5.5 shrink-0"></span>
                                 Add To Cart
@@ -131,7 +132,7 @@
                     </form>
 
                     <div class="space-y-3">
-                        @if ($product->sku)
+                        {{-- @if ($product->sku)
                             <p class="text-base/6 text-gray-700"><span
                                     class="text-base-content font-semibold">SKU</span> :
                                 {{ $product?->sku }}</p>
@@ -141,7 +142,7 @@
                                 <span class="text-base-content font-semibold">Barcode (ISBN, UPC, GTIN, etc.)</span> :
                                 {{ $product?->barcode }}
                             </p>
-                        @endif
+                        @endif --}}
                         @if ($product->category_id)
                             <p class="text-base/6 text-gray-700"><span
                                     class="text-base-content font-semibold">Category</span>
