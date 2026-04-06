@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\Product\UpdateRequest as ProductUpdateRequest;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -57,7 +58,17 @@ class ProductController extends Controller
     public function store(ProductStoreRequest $request)
     {
 
-        Product::create($request->validated());
+        $product = Product::create($request->validated());
+
+        ProductVariant::updateOrCreate(
+            ['product_id' => $product->id],
+            [
+                'sku' => $request->sku ?? null,
+                'barcode' => $request->barcode ?? null,
+                'regular_price' => $request->regular_price ?? 0,
+                'selling_price' => $request->selling_price ?? 0,
+            ]
+        );
 
         return redirect()
             ->route('admin.products.index')
