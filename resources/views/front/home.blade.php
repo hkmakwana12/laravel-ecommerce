@@ -101,21 +101,23 @@
     </div>
     <!-- feature products section end -->
 
-    <!-- top categories product section start -->
-    <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <!-- Header section -->
-            <div class="mb-6 space-y-4 text-center sm:mb-8 lg:mb-10">
-                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Categories</h2>
-            </div>
+    @if ($topCategories->count() > 0)
+        <!-- top categories product section start -->
+        <div class="bg-base-200 py-6 sm:py-10 lg:py-14">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <!-- Header section -->
+                <div class="mb-6 space-y-4 text-center sm:mb-8 lg:mb-10">
+                    <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Popular Categories</h2>
+                </div>
 
-            <!-- Categories Grid -->
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                @each('components.common.category-card', $topCategories, 'category')
+                <!-- Categories Grid -->
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    @each('components.common.category-card', $topCategories, 'category')
+                </div>
             </div>
         </div>
-    </div>
-    <!-- top categories product section end -->
+        <!-- top categories product section end -->
+    @endif
 
 
     <!-- Our Product section start  -->
@@ -192,17 +194,18 @@
 
     <!-- recent products section start -->
     <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <!-- Product Header -->
-            <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
-                <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added</h2>
-            </div>
+        <div class="bg-base-100 py-6 sm:py-10 lg:py-14">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <!-- Product Header -->
+                <div class="mb-6 space-y-4 md:mb-8 lg:mb-10">
+                    <h2 class="text-base-content text-2xl font-semibold md:text-3xl lg:text-4xl">Recently Added</h2>
+                </div>
 
-            <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-                @each('components.products.card', $bestSellingProducts, 'product')
+                <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+                    @each('components.products.card', $bestSellingProducts, 'product')
+                </div>
             </div>
         </div>
-    </div>
-    <!-- recent products section end -->
+        <!-- recent products section end -->
 
 </x-layouts.front>
