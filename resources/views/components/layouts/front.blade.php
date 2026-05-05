@@ -66,6 +66,129 @@
     @if (setting('general.is_captcha'))
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
     @endif
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('cart', {
+                items: [],
+                count: 0,
+                sub_total: 0,
+                total_tax_amount: 0,
+                grand_total: 0,
+                loading: false,
+
+                setCart(data) {
+                    this.items = data.items;
+                    this.count = data.count;
+                    this.sub_total = data.sub_total;
+                    this.taxes = data.taxes;
+                    this.total_tax_amount = data.total_tax_amount;
+                    this.grand_total = data.grand_total;
+                },
+
+                init() {
+                    this.fetchCart();
+                },
+
+                async fetchCart() {
+                    try {
+                        this.loading = true;
+                        let res = await axios.get(`{{ route('account.cart.list') }}`);
+                        this.setCart(res.data.cart);
+                    } catch (e) {
+                        console.error('Fetch cart failed', e);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async addFromForm(form) {
+                    if (this.loading) return;
+
+                    try {
+                        this.loading = true;
+
+                        let formData = new FormData(form);
+
+                        let res = await axios.post(form.action, formData);
+
+                        this.fetchCart();
+
+                    } catch (e) {
+                        console.error('Add to cart failed', e);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+
+                async remove(productId) {
+                    try {
+                        this.loading = true;
+
+                        let res = await axios.get(
+                            `{{ route('account.removeFromCart', ['product_id' => ':product_id']) }}`
+                            .replace(':product_id', productId));
+
+                        this.fetchCart();
+
+                    } catch (e) {
+                        console.error('Remove failed', e);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                async increment(productId, variantId) {
+                    try {
+                        this.loading = true;
+
+                        let res = await axios.post(
+                            `{{ route('products.addToCart') }}`, {
+                                _token: '{{ csrf_token() }}',
+                                product_id: productId,
+                                variant_id: variantId,
+                                quantity: 1
+                            }
+                        );
+
+                        this.fetchCart();
+
+                    } catch (e) {
+                        console.error('Increment failed', e);
+                    } finally {
+                        this.loading = false;
+                    }
+                },
+                async decrement(productId, variantId) {
+                    try {
+                        this.loading = true;
+
+                        let res = await axios.post(
+                            `{{ route('products.addToCart') }}`, {
+                                _token: '{{ csrf_token() }}',
+                                product_id: productId,
+                                variant_id: variantId,
+                                quantity: -1
+                            }
+                        );
+
+                        this.fetchCart();
+
+                    } catch (e) {
+                        console.error('Decrement failed', e);
+                    } finally {
+                        this.loading = false;
+                    }
+                }
+            });
+        });
+
+        function formatCurrency(value) {
+            return value.toLocaleString('en-US', {
+                style: 'currency',
+                currency: '{{ app_country()->currency }}'
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -18,8 +18,11 @@
             </a>
         </h3>
         <p class="text-base-content/80 text-lg font-medium">@money($product->defaultVariant?->selling_price)</p>
-        <form action="{{ route('products.addToCart') }}" method="POST">
+
+        <form x-data @submit.prevent="$store.cart.addFromForm($event.target)" action="{{ route('products.addToCart') }}"
+            method="POST">
             @csrf
+
             <input type="hidden" name="quantity" value="1" />
             <input type="hidden" name="product_id" value="{{ $product->id }}" />
             <input type="hidden" name="variant_id" value="{{ $product->defaultVariant?->id }}" />

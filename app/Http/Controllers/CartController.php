@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Notifications\AbandonedCartNotification;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -48,7 +47,7 @@ class CartController extends Controller
             ->with('success', 'Product added to cart successfully!!!');
     }
 
-    public function removeFromCart($variant_id): RedirectResponse
+    public function removeFromCart(int $variant_id): RedirectResponse
     {
         $cartItem = cart()->items()->where('variant_id', $variant_id)
             ->first();
@@ -80,5 +79,41 @@ class CartController extends Controller
 
         return redirect()->route('account.checkout')
             ->with('success', 'Cart updated successfully!!!');
+    }
+
+    public function listCart(Request $request)
+    {
+        $cart = cart();
+
+        return response()->json([
+            'cart' => $this->formatCart($cart),
+        ]);
+    }
+
+    private function formatCart($cart)
+    {
+        $items = $cart->items()
+            ->with(['product', 'variant'])
+            ->get();
+
+        return [
+            'items' => $items->map(function ($item) {
+                return [
+                    'id' => $item->id,
+                    'variant_id' => $item->variant_id,
+                    'image' => $item->product->thumbnailURL('thumb'),
+                    'name' => $item->product->name,
+                    'price' => $item->variant->selling_price,
+                    'quantity' => $item->quantity,
+                    'total' => round($item->variant->selling_price * $item->quantity, 2),
+                    'item_url' => route('products.show', $item->product->slug),
+                ];
+            }),
+            'count' => $items->count(),
+            'taxes' => $cart->tax_breakdown,
+            'sub_total' => $cart->total,
+            'total_tax_amount' => $cart->total_tax_amount,
+            'grand_total' => round($cart->total + $cart->total_tax_amount, 2),
+        ];
     }
 }

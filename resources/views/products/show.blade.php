@@ -98,8 +98,10 @@
                     <div class="text-base-content/80">
                         {!! $product->short_description !!}
                     </div>
-                    <form action="{{ route('products.addToCart') }}" method="POST">
+                    <form x-data @submit.prevent="$store.cart.addFromForm($event.target)"
+                        action="{{ route('products.addToCart') }}" method="POST">
                         @csrf
+
                         <div class="flex flex-wrap lg:flex-nowrap items-center gap-3 mb-6">
                             <div class="max-w-32" data-input-number='{ "min": 1 }'>
                                 <div class="input items-center">

@@ -10,8 +10,6 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SubscriberController;
-use App\Jobs\Demo;
-use App\Mail\JobFailedMail;
 use App\Models\State;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -113,7 +111,7 @@ Route::get('/cart', [CartController::class, 'index'])->name('account.cart');
 Route::post('/cart/addToCart', [CartController::class, 'addToCart'])->name('products.addToCart');
 Route::get('/cart/removeFromCart/{product_id}', [CartController::class, 'removeFromCart'])->name('account.removeFromCart');
 Route::post('/cart/updateCart', [CartController::class, 'updateCart'])->name('account.updateCart');
-
+Route::get('/cart/list', [CartController::class, 'listCart'])->name('account.cart.list');
 /**
  * After Login Pages
  */

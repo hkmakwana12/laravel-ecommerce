@@ -53,9 +53,8 @@
 
                 <div class="indicator pr-1">
                     <span
-                        class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white">
-                        {{ cartCount() }}
-                    </span>
+                        class="indicator-item p-0 size-4 text-xs text-center badge badge-error rounded-full text-white"
+                        x-data x-text="$store.cart.count"></span>
 
                     <button type="button" class="btn btn-sm btn-text btn-square" aria-haspopup="dialog"
                         aria-expanded="false" aria-controls="cart-drawer" data-overlay="#cart-drawer">
