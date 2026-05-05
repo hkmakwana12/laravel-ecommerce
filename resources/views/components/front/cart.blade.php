@@ -48,7 +48,8 @@
                                                 </button>
 
                                                 <!-- Quantity -->
-                                                <input class="text-center" type="text" :value="item.quantity"
+                                                <input class="text-center" type="text"
+                                                    :name="`quantity[${item.variant_id}]`" :value="item.quantity"
                                                     readonly />
 
                                                 <!-- Increment -->
