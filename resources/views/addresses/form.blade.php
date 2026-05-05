@@ -6,6 +6,10 @@
         @method('put')
     @endisset
 
+    @if (request()->has('return_url'))
+        <input type="hidden" name="return_url" value="{{ request('return_url') }}" />
+    @endif
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="space-y-1">
             <label for="name" class="label-text">Address Name</label>

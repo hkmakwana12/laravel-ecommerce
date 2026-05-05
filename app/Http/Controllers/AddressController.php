@@ -75,16 +75,8 @@ class AddressController extends Controller
 
         auth()->user()->addresses()->create($validated);
 
-        return redirect()->route('account.addresses.index')
+        return redirect(request('return_url', route('account.addresses.index')))
             ->with('success', 'Address Added Successfully!!!');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Address $address)
-    {
-        //
     }
 
     /**
@@ -94,9 +86,7 @@ class AddressController extends Controller
     {
         $userAddress = auth()->user()->addresses()->where('id', $address->id)->first();
 
-        if (is_null($userAddress)) {
-            abort(404);
-        }
+        abort_if(is_null($userAddress), 404);
 
         $countries = Country::all(['id', 'name'])
             ->pluck('name', 'id');
@@ -128,9 +118,7 @@ class AddressController extends Controller
 
         $userAddress = auth()->user()->addresses()->where('id', $address->id)->first();
 
-        if (is_null($userAddress)) {
-            abort(404);
-        }
+        abort_if(is_null($userAddress), 404);
 
         if ($validated['is_default']) {
             auth()->user()->addresses()->update(['is_default' => false]);
@@ -140,7 +128,7 @@ class AddressController extends Controller
         $address->fill($validated);
         $address->save();
 
-        return redirect()->route('account.addresses.index')
+        return redirect(request('return_url', route('account.addresses.index')))
             ->with('success', 'Address updated Successfully!!!');
     }
 
@@ -151,13 +139,11 @@ class AddressController extends Controller
     {
         $userAddress = auth()->user()->addresses()->where('id', $address->id)->first();
 
-        if (is_null($userAddress)) {
-            abort(404);
-        }
+        abort_if(is_null($userAddress), 404);
 
         $address->delete();
 
-        return redirect()->route('account.addresses.index')
+        return redirect()->back()
             ->with('success', 'Address deleted Successfully!!!');
     }
 
@@ -165,9 +151,7 @@ class AddressController extends Controller
     {
         $userAddress = auth()->user()->addresses()->where('id', $address->id)->first();
 
-        if (is_null($userAddress)) {
-            abort(404);
-        }
+        abort_if(is_null($userAddress), 404);
 
         auth()->user()->addresses()->update(['is_default' => false]);
 

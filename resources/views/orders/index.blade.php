@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card card-border shadow-none">
     <div class="overflow-x-auto">
         <table class="table mb-0">
             <thead>
@@ -16,7 +16,7 @@
             <tbody>
                 @forelse ($orders as $order)
                     <tr>
-                        <td class="!font-semibold">
+                        <td class="font-semibold!">
                             <a class="link link-animated link-primary"
                                 href="{{ route('account.orders.show', $order) }}">{{ $order->order_number }}</a>
                         </td>
@@ -25,7 +25,7 @@
                             {{ $order->order_date->format(setting('general.date_format')) }}
                         </td>
 
-                        <td class="!whitespace-normal !break-words">
+                        <td class="whitespace-normal! wrap-break-word!">
                             {{ $order->items->pluck('product.name')->implode(', ') }}
                         </td>
                         <td class="text-center">
@@ -35,8 +35,7 @@
                         <td class="text-right">@money($order->grand_total)</td>
                         <td class="text-right">
                             <a class="btn btn-sm btn-outline btn-primary"
-                                href="{{ route('account.orders.show', $order) }}">View
-                                Order</a>
+                                href="{{ route('account.orders.show', $order) }}">{{ __('View Order') }}</a>
                         </td>
                     </tr>
                 @empty

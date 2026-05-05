@@ -50,7 +50,7 @@
                                     @endforeach
                                 </div>
 
-                                <a href="{{ route('account.addresses.create') }}"
+                                <a href="{{ route('account.addresses.create') }}?return_url={{ urlencode(url()->current()) }}"
                                     class="btn btn-outline btn-primary w-1/2">
                                     <span class="icon-[tabler--circle-plus] size-4.5"></span>
                                     {{ __('Add Address') }}
@@ -224,9 +224,8 @@
                     couponApplied: false,
                     couponError: null,
 
-                    grandTotal() {
-                        return this.subTotal + this.deliveryCharge + this.totalTax - this.couponDiscount;
-                    },
+                    grandTotal: 0,
+
                     fetchTaxes() {
                         axios.get("{{ route('account.checkout.taxes') }}", {
                                 params: {
@@ -238,7 +237,7 @@
                                 this.taxes = response.data.taxes;
                                 this.totalTax = response.data.total_tax;
 
-                                this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
+                                this.updateTotal();
                             })
                             .catch(error => {
                                 console.error("Tax fetch error:", error);
@@ -254,7 +253,7 @@
                             this.couponDiscount = response.data.discount;
                             this.couponApplied = true;
 
-                            this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
+                            this.updateTotal();
 
                         }).catch(error => {
                             this.couponDiscount = 0;
@@ -268,6 +267,10 @@
                         this.couponApplied = false;
                         this.couponError = null;
 
+                        this.updateTotal();
+                    },
+
+                    updateTotal() {
                         this.grandTotal = this.subTotal + this.totalTax + this.deliveryCharge - this.couponDiscount;
                     },
 

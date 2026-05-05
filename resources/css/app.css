@@ -40,3 +40,11 @@ label.required::after {
     content: ' *';
     color: var(--color-error);
 }
+
+.ProseMirror {
+
+    /* ring none for focus-visible */
+    &:focus-visible {
+        outline: none !important;
+    }
+}

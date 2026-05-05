@@ -206,6 +206,7 @@
                 </div>
             </div>
         </div>
-        <!-- recent products section end -->
+    </div>
+    <!-- recent products section end -->
 
 </x-layouts.front>

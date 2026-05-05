@@ -64,11 +64,13 @@
                             </button>
                         </div>
 
-                        <div class="carousel-pagination flex flex-none justify-between gap-5 overflow-x-auto">
+                        <div class="carousel-pagination flex flex-none gap-5 overflow-x-auto">
                             @foreach ($images as $imageUrl)
-                                <img src="{{ $imageUrl }}"
-                                    class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30 rounded-box size-16"
-                                    alt="{{ $product?->name }}" />
+                                <div>
+                                    <img src="{{ $imageUrl }}"
+                                        class="carousel-pagination-item carousel-active:opacity-100 grow object-cover opacity-30 rounded-box size-16"
+                                        alt="{{ $product?->name }}" />
+                                </div>
                             @endforeach
                         </div>
 
