@@ -3,6 +3,10 @@ import './bootstrap';
 
 import "flyonui/flyonui"
 
+import { Notyf } from 'notyf';
+
+window.Notyf = Notyf
+
 import Alpine from 'alpinejs'
 
 import { Editor } from '@tiptap/core'

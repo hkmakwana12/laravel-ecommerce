@@ -23,6 +23,7 @@
         "@tiptap/starter-kit": "^2.11.7",
         "alpinejs": "^3.14.9",
         "build": "^0.1.4",
-        "flyonui": "^2.4.1"
+        "flyonui": "^2.4.1",
+        "notyf": "^3.10.0"
     }
 }

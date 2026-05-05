@@ -48,7 +48,6 @@
 </head>
 
 <body class="bg-base-100">
-    <x-admin.alert />
     <div class="bg-base-100 flex-col">
         <x-front.header />
 
@@ -59,6 +58,8 @@
 
     </div>
 
+    <x-common.delete-modal />
+
     <!-- script file here -->
     @vite('resources/js/app.js')
     @stack('scripts')
@@ -67,8 +68,20 @@
         <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" defer></script>
     @endif
 
+
+    <x-admin.alert />
+
     <script>
         document.addEventListener('alpine:init', () => {
+            const notyf = new Notyf({
+                duration: 5000,
+                position: {
+                    x: 'right',
+                    y: 'top'
+                },
+                dismissible: true,
+            });
+
             Alpine.store('cart', {
                 items: [],
                 count: 0,
@@ -114,6 +127,8 @@
 
                         this.fetchCart();
 
+                        notyf.success(res.data.message || 'Product added to cart');
+
                     } catch (e) {
                         console.error('Add to cart failed', e);
                     } finally {
@@ -130,6 +145,8 @@
                             .replace(':product_id', productId));
 
                         this.fetchCart();
+
+                        notyf.success(res.data.message || 'Product removed from cart');
 
                     } catch (e) {
                         console.error('Remove failed', e);

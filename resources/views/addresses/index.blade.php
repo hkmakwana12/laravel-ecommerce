@@ -32,14 +32,9 @@
                         <a class="link link-animated link-primary"
                             href="{{ route('account.addresses.edit', $address) }}">Edit</a>
 
-                        <form action="{{ route('account.addresses.destroy', $address) }}" method="POST"
-                            onsubmit="return confirm('Are you sure want to delete?')">
-                            @csrf
-                            @method('DELETE')
-
-                            <button class="link link-animated link-error"
-                                href="{{ route('account.addresses.edit', $address) }}">Delete</button>
-                        </form>
+                        <button class="link link-animated link-error" aria-label="Delete Action" aria-haspopup="dialog"
+                            aria-expanded="false" aria-controls="delete-modal" data-overlay="#delete-modal"
+                            onclick="document.getElementById('deleteResourceForm').action='{{ route('account.addresses.destroy', $address) }}';">Delete</button>
                         @if (!$address?->is_default)
                             <a class="link link-animated"
                                 href="{{ route('account.addresses.setDefault', $address) }}">Set as

@@ -24,7 +24,6 @@
 </head>
 
 <body class="bg-base-200">
-    <x-admin.alert />
 
     <div class="bg-base-200 flex min-h-screen flex-col">
         <x-admin.topnav />
@@ -53,9 +52,15 @@
         </div>
     </div>
 
+    <x-common.delete-modal />
+
     @vite('resources/js/app.js')
 
     @stack('scripts')
+
+
+
+    <x-admin.alert />
 </body>
 
 </html>
